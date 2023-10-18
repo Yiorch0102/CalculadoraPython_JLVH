@@ -1,0 +1,16 @@
+def quicksort(arr):
+    if len(arr) <= 1:
+        return arr
+    else:
+        pivot = arr[0]
+        menor = [x for x in arr[1:] if x <= pivot]
+        mayor = [x for x in arr[1:] if x > pivot]
+        return quicksort(menor) + [pivot] + quicksort(mayor)
+
+lista = []
+n = int(input("Ingresa la cantidad de elementos de la lista: "))
+for i in range(n):
+    z = input("Ingresa el elemento %d de la lista: "%(i))
+    lista.append(z)
+lista_ordenada = quicksort(lista)
+print(lista_ordenada)
