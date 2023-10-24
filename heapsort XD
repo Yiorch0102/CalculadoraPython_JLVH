@@ -1,0 +1,45 @@
+def heapify(l, i):
+    # Si el nodo tiene dos hijos
+    if 2 * i + 2 <= len(l) - 1:
+        if l[2 * i + 1] <= l[2 * i + 2]:
+            min = 2 * i + 1
+        else:
+            min = 2 * i + 2
+
+        if l[i] > l[min]:
+            aux = l[i]
+            l[i] = l[min]
+            l[min] = aux
+
+            heapify(l, min)
+    # En caso de tener un hijo
+    elif 2 * i + 1 <= len(l) - 1:
+        if l[i] > l[2 * i + 1]:
+            aux = l[i]
+            l[i] = l[2 * i + 1]
+            l[2 * i + 1] = aux
+
+    return l
+
+def heapsort(l):
+   for i in range(len(l) // 2 - 1, -1, -1):
+       l = heapify(l, i)
+
+   l2 = []
+   for i in range(len(l) - 1, -1, -1):
+       aux = l[0]
+       l[0] = l[i]
+       l[i] = aux
+
+       l2.append(aux)
+
+       l = l[:i]
+
+       heapify(l, 0)
+
+   return l2
+
+lista = [12, 78, 90, 2, 12, 0, 32, 65]
+
+print(lista)
+print(heapsort(lista))
