@@ -1,0 +1,51 @@
+def es_seguro(tablero, fila, columna, N):
+    for i in range(fila):
+        if tablero[i] == columna or \
+           tablero[i] - i == columna - fila or \
+           tablero[i] + i == columna + fila:
+            return False
+    return True
+
+def imprimir_tablero(tablero):
+    for fila in range(len(tablero)):
+        line = ""
+        for columna in range(len(tablero)):
+            if columna == tablero[fila]:
+                line += "Q "
+            else:
+                line += ". "
+        print(line)
+    print("\n")
+
+def resolver_n_reinas(tablero, fila, N):
+    if fila == N:
+        imprimir_tablero(tablero)
+        return
+    for columna in range(N):
+        if es_seguro(tablero, fila, columna, N):
+            tablero[fila] = columna
+            resolver_n_reinas(tablero, fila + 1, N)
+            tablero[fila] = -1  # backtrack
+
+def heuristica_colocacion_inicial(N):
+    # Inicializar el tablero con todas las reinas fuera del tablero (-1)
+    tablero = [-1] * N
+    
+    for fila in range(N):
+        columna = 0
+        while columna < N:
+            if es_seguro(tablero, fila, columna, N):
+                tablero[fila] = columna
+                break
+            columna += 1
+        
+        if columna == N:
+            for i in range(N):
+                tablero[i] = -1
+            fila = -1  
+            continue
+    
+    return tablero
+
+tablero_inicial = heuristica_colocacion_inicial(8)
+resolver_n_reinas(tablero_inicial, 0, 8)
