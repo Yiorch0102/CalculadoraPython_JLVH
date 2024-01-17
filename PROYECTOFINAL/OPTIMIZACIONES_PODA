@@ -1,0 +1,33 @@
+# Técnica de poda
+def es_seguro(tablero, fila, columna, N):
+    for i in range(fila):
+        if tablero[i] == columna or \
+           tablero[i] - i == columna - fila or \
+           tablero[i] + i == columna + fila:
+            return False
+    return True
+
+def imprimir_tablero(tablero):
+    for fila in range(len(tablero)):
+        line = ""
+        for columna in range(len(tablero)):
+            if columna == tablero[fila]:
+                line += "Q "
+            else:
+                line += ". "
+        print(line)
+    print("\n")
+
+def resolver_n_reinas(tablero, fila, N):
+    if fila == N:
+        imprimir_tablero(tablero)
+        return
+    for columna in range(N):
+        if tablero[fila] == -1 and es_seguro(tablero, fila, columna, N):
+            tablero[fila] = columna
+            resolver_n_reinas(tablero, fila + 1, N)
+            tablero[fila] = -1  # backtrack
+
+# Ejemplo de uso para N = 4
+tablero = [-1] * 4
+resolver_n_reinas(tablero, 0, 4)
